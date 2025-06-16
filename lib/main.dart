@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mini_app/providers/post_provider.dart';
 import 'package:mini_app/providers/user_provider.dart';
-import 'package:mini_app/screens/home_screen.dart';
+import 'package:mini_app/screens/post/post_screen.dart';
 import 'package:mini_app/screens/user_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => PostProvider()),
       ],
       child: MyApp(),
     ),
@@ -19,7 +21,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: UserScreen(),
+      child: PostScreen(),
     );
   }
 }

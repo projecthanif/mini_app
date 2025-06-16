@@ -4,7 +4,7 @@ import 'package:mini_app/services/user_service.dart';
 
 class UserProvider extends ChangeNotifier {
   late List<UserModel> users = [];
-  late UserModel? user;
+  late UserModel? user = null;
   late bool loading = true;
   final UserService _userService = UserService();
 
