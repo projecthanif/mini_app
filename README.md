@@ -1,17 +1,31 @@
 # mini_app
 
-A new Flutter project.
+# Documentation setup
 
-## Getting Started
+## Prerequiste
 
-This project is a starting point for a Flutter application.
+1. Having Flutter installed locally
+2. VSCODE or Andriod Studio
+3. Emulator or your device
 
-A few resources to get you started if this is your first Flutter project:
+### First clone the repo
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```bash
+git clone https://github.com/projecthanif/mini_app.git
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# mini_app
+### Then build install necessary dependencies
+
+By running the fllowing command
+
+```bash
+flutter pub get
+```
+
+### Then launch your emulator
+
+### To build
+
+```bash
+flutter build apk
+```

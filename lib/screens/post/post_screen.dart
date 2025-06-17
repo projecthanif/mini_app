@@ -96,8 +96,18 @@ class _PostScreenState extends State<PostScreen> {
         } else if (postProvider.posts.isNotEmpty) {
           return _PostList(posts: postProvider.posts);
         } else {
-          return Center(
-            child: Text("No Post"),
+          return Container(
+            color: Colors.red,
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                "No Post",
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           );
         }
       },
@@ -116,8 +126,17 @@ class _PostScreenState extends State<PostScreen> {
         } else if (postProvider.posts.isNotEmpty) {
           return _PostList(posts: postProvider.queriedPosts!);
         } else {
-          return Center(
-            child: Text("No Post"),
+          return Container(
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                "No Post",
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           );
         }
       },

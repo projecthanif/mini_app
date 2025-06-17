@@ -10,22 +10,40 @@ class PostProvider extends ChangeNotifier {
   final PostService _postService = PostService();
 
   Future<void> getPost() async {
-    posts = await _postService.getAllPost();
-    loading = false;
-    notifyListeners();
+    try {
+      posts = await _postService.getAllPost();
+    } catch (e) {
+      print("Error: $e");
+      posts = [];
+    } finally {
+      loading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> getPostQueried(String query, bool filtered) async {
-    loading = true;
-    queriedPosts = await _postService.getPostBySearch(query,filtered);
-    notifyListeners();
-    loading = false;
+    try {
+      loading = true;
+      queriedPosts = await _postService.getPostBySearch(query, filtered);
+    } catch (e) {
+      print("Error: $e");
+      queriedPosts = [];
+    } finally {
+      notifyListeners();
+      loading = false;
+    }
   }
 
   Future<void> getUserById(int id) async {
-    loading = true;
-    post = await _postService.getUserById(id);
-    notifyListeners();
-    loading = false;
+    try {
+      loading = true;
+      post = await _postService.getUserById(id);
+    } catch (e) {
+      print("Error: $e");
+      post = null;
+    } finally {
+      notifyListeners();
+      loading = false;
+    }
   }
 }
