@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mini_app/providers/post_provider.dart';
 import 'package:mini_app/providers/user_provider.dart';
 import 'package:mini_app/screens/post/post_screen.dart';
-import 'package:mini_app/screens/user_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {

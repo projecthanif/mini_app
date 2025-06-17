@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mini_app/models/post_model.dart';
 import 'package:mini_app/providers/post_provider.dart';
 import 'package:mini_app/screens/post/post_detail_screen.dart';
+import 'package:mini_app/widgets/app_filter_bar.dart';
 import 'package:mini_app/widgets/post_card.dart';
 import 'package:mini_app/widgets/app_search_bar.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class PostScreen extends StatefulWidget {
 
 class _PostScreenState extends State<PostScreen> {
   final TextEditingController searchController = TextEditingController();
+  final TextEditingController filterController = TextEditingController();
   late ValueNotifier<bool> isQueried = ValueNotifier(false);
 
   @override
@@ -51,15 +53,18 @@ class _PostScreenState extends State<PostScreen> {
               onSearch: () {
                 isQueried.value = true;
                 Provider.of<PostProvider>(context, listen: false)
-                    .getPostQueried(searchController.text);
+                    .getPostQueried(searchController.text, false);
               },
             ),
-            Text(
-              "Discover",
-              style: TextStyle(
-                fontSize: 25.sp,
-                fontWeight: FontWeight.bold,
-              ),
+            SizedBox(height: 10.h),
+            AppFilterBar(
+              controller: filterController,
+              isQueried: isQueried,
+              onSelect: (value) {
+                isQueried.value = true;
+                Provider.of<PostProvider>(context, listen: false)
+                    .getPostQueried(value!, true);
+              },
             ),
             Text("Post from jsonplaceholder"),
             SizedBox(height: 10.h),

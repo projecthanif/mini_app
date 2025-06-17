@@ -15,9 +15,9 @@ class PostProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getPostQueried(String query) async {
+  Future<void> getPostQueried(String query, bool filtered) async {
     loading = true;
-    queriedPosts = await _postService.getPostBySearch(query);
+    queriedPosts = await _postService.getPostBySearch(query,filtered);
     notifyListeners();
     loading = false;
   }

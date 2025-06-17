@@ -18,17 +18,29 @@ class PostService {
     return [];
   }
 
-  Future<List<PostModel>>? getPostBySearch(String value) async {
+  Future<List<PostModel>>? getPostBySearch(String value, bool filtered) async {
     final List<PostModel> posts = await getAllPost();
     final String query = value.toLowerCase();
 
-    final List<PostModel> queriedResult = posts.where((post) {
-      final title = post.title.toLowerCase();
-      final slug = post.slug.toLowerCase();
-      return title.contains(query) || slug.contains(query);
-    }).toList();
+    if (!filtered) {
+      return posts.where((post) {
+        final title = post.title.toLowerCase();
+        final slug = post.slug.toLowerCase();
+        return title.contains(query) || slug.contains(query);
+      }).toList();
+    }
 
-    return queriedResult;
+    if (value == "1") {
+      posts.sort(
+        (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
+      );
+    } else {
+      posts.sort(
+        (a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()),
+      );
+    }
+
+    return posts;
   }
 
   Future<PostModel?> getUserById(int id) async {
