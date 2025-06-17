@@ -7,16 +7,16 @@ class PostCard extends StatelessWidget {
   const PostCard({
     super.key,
     required this.title,
-    required this.author,
-    required this.category,
+    // required this.author,
+    // required this.category,
     required this.thumbnail,
     required this.date,
   });
 
-  final String thumbnail;
-  final String author;
+  final String? thumbnail;
+  // final String author;
   final String title;
-  final String category;
+  // final String category;
   final String date;
 
   String capitalize(String value) {
@@ -51,25 +51,15 @@ class PostCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Text(
-                    capitalize(category),
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20.sp,
-                    ),
-                  ),
-                ),
-                // SizedBox(height: 5.h),
-                Expanded(
+                  flex: 2,
                   child: Text(
                     title,
                     softWrap: true,
-                    maxLines: 2,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 15.sp,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -78,15 +68,6 @@ class PostCard extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Expanded(
-                        child: Text(
-                          capitalize(author),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
                       Text(
                         formmatedDate(date),
                         style: TextStyle(
@@ -97,7 +78,6 @@ class PostCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 2.h),
               ],
             ),
           ),
