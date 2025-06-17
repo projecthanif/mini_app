@@ -4,6 +4,7 @@ import 'package:mini_app/models/post_model.dart';
 import 'package:mini_app/providers/post_provider.dart';
 import 'package:mini_app/screens/post/post_detail_screen.dart';
 import 'package:mini_app/widgets/post_card.dart';
+import 'package:mini_app/widgets/app_search_bar.dart';
 import 'package:provider/provider.dart';
 
 class PostScreen extends StatefulWidget {
@@ -14,6 +15,9 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  final TextEditingController searchController = TextEditingController();
+  late ValueNotifier<bool> isQueried = ValueNotifier(false);
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -36,11 +40,20 @@ class _PostScreenState extends State<PostScreen> {
           ),
         ),
       ),
-      body: Container(
-        margin: EdgeInsets.all(10),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            AppSearchBar(
+              controller: searchController,
+              isQueried: isQueried,
+              onSearch: () {
+                isQueried.value = true;
+                Provider.of<PostProvider>(context, listen: false)
+                    .getPostQueried(searchController.text);
+              },
+            ),
             Text(
               "Discover",
               style: TextStyle(
@@ -50,30 +63,59 @@ class _PostScreenState extends State<PostScreen> {
             ),
             Text("Post from jsonplaceholder"),
             SizedBox(height: 10.h),
-            SizedBox(
-              height: 650.h,
-              width: double.infinity,
-              child: Consumer<PostProvider>(
-                builder: (context, postProvider, _) {
-                  if (postProvider.loading) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.black,
-                      ),
-                    );
-                  } else if (postProvider.posts.isNotEmpty) {
-                    return _PostList(posts: postProvider.posts);
-                  } else {
-                    return Center(
-                      child: Text("No Post"),
-                    );
-                  }
-                },
-              ),
+            ValueListenableBuilder(
+              valueListenable: isQueried,
+              builder: (context, value, _) {
+                return Expanded(
+                  child: isQueried.value
+                      ? _buildQueriedPostList()
+                      : _buildPostList(),
+                );
+              },
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPostList() {
+    return Consumer<PostProvider>(
+      builder: (context, postProvider, _) {
+        if (postProvider.loading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          );
+        } else if (postProvider.posts.isNotEmpty) {
+          return _PostList(posts: postProvider.posts);
+        } else {
+          return Center(
+            child: Text("No Post"),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildQueriedPostList() {
+    return Consumer<PostProvider>(
+      builder: (context, postProvider, _) {
+        if (postProvider.loading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          );
+        } else if (postProvider.posts.isNotEmpty) {
+          return _PostList(posts: postProvider.queriedPosts!);
+        } else {
+          return Center(
+            child: Text("No Post"),
+          );
+        }
+      },
     );
   }
 }

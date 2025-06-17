@@ -4,6 +4,7 @@ import 'package:mini_app/services/post_service.dart';
 
 class PostProvider extends ChangeNotifier {
   late List<PostModel> posts = [];
+  late List<PostModel>? queriedPosts = null;
   late PostModel? post = null;
   bool loading = true;
   final PostService _postService = PostService();
@@ -12,6 +13,13 @@ class PostProvider extends ChangeNotifier {
     posts = await _postService.getAllPost();
     loading = false;
     notifyListeners();
+  }
+
+  Future<void> getPostQueried(String query) async {
+    loading = true;
+    queriedPosts = await _postService.getPostBySearch(query);
+    notifyListeners();
+    loading = false;
   }
 
   Future<void> getUserById(int id) async {
